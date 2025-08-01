@@ -160,3 +160,5 @@ lms_project/
 ---
 
 ## 5. DB Schema
+
+<img width="963" height="824" alt="project plan" src="https://github.com/user-attachments/assets/f7a90a3a-9b6f-4809-bd02-9019168108c1" />
