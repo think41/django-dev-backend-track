@@ -1,0 +1,4 @@
+username,password,email,first_name,last_name,role,is_approved
+admin,adminpass,admin@example.com,Admin,User,Admin,True
+member1,memberpass,member1@example.com,Member,One,Member,True
+member2,memberpass,member2@example.com,Member,Two,Member,False
