@@ -18,7 +18,6 @@
 
 ## 3. Data Models / Schema
 
----
 
 ## 4. API Endpoints
 
