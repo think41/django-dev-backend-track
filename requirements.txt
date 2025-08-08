@@ -2,3 +2,7 @@ Django
 psycopg2-binary
 celery
 redis
+djangorestframework
+djangorestframework-simplejwt
+django-filter
+drf-spectacular
