@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from ..models import Book, BorrowRecord, Fine
-from ..services import BookService, BorrowService, FineService
+from ..services import BorrowService, FineService
 from .serializers import BookSerializer, BorrowRecordSerializer, FineSerializer
 
 

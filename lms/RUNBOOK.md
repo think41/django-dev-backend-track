@@ -31,14 +31,14 @@ python manage.py runserver
 Use Authorization: Bearer <access_token> header after login. Admin-only steps are marked.
 
 1) Register a member
-    - Method/Path: POST `/api/users/auth/register/`
+    - Method/Path: POST `/api/auth/register/`
     - Body:
       ```json
       {"username":"alice","email":"alice@example.com","password":"Passw0rd!","role":"MEMBER"}
       ```
 
 2) Login as admin (seeded or superuser) to approve users [ADMIN]
-    - Method/Path: POST `/api/users/auth/login/`
+    - Method/Path: POST `/api/auth/login/`
     - Body:
       ```json
       {"identifier":"admin","password":"<admin_password>"}
@@ -46,10 +46,10 @@ Use Authorization: Bearer <access_token> header after login. Admin-only steps ar
     - Copy `access` token from response.
 
 3) Approve the new member [ADMIN]
-    - Method/Path: POST `/api/users/members/{user_id}/approve-user/`
+    - Method/Path: POST `/api/members/{user_id}/approve-user/`
 
 4) Member login to get token
-    - Method/Path: POST `/api/users/auth/login/`
+    - Method/Path: POST `/api/auth/login/`
     - Body:
       ```json
       {"identifier":"alice","password":"Passw0rd!"}
@@ -93,7 +93,7 @@ Use Authorization: Bearer <access_token> header after login. Admin-only steps ar
      - Method/Path: PATCH `/api/borrow/{borrow_id}/return/approve/`
 
 13) Admin can inspect a user’s borrow history [ADMIN]
-     - GET `/api/users/members/{user_id}/borrow/`
+     - GET `/api/members/{user_id}/borrow/`
      - GET `/api/users/members/{user_id}/borrow/{book_id}/`
 
 14) Admin views fines [ADMIN]
