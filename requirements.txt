@@ -4,3 +4,5 @@ djangorestframework
 djangorestframework-simplejwt
 celery
 redis
+drf-spectacular
+python-dotenv

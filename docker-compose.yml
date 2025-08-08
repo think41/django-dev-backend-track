@@ -8,19 +8,23 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+    environment:
+      - DATABASE_HOST=db
+      - REDIS_HOST=redis
     depends_on:
       - db
       - redis
   db:
     image: postgres:latest
-    container_name: lms-postgres
+    container_name: django-dev-track
     environment:
-      POSTGRES_DB: lms
-      POSTGRES_USER: lms_user
-      POSTGRES_PASSWORD: lms_password
+      POSTGRES_DB: django-dev-track
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: django-avi
     ports:
-      - "5433:5432"
-    #command: -p 5432
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   redis:
     image: "redis:alpine"
     ports:
@@ -30,6 +34,9 @@ services:
     command: celery -A lms worker -l info
     volumes:
       - .:/app
+    environment:
+      - DATABASE_HOST=db
+      - REDIS_HOST=redis
     depends_on:
       - db
       - redis
