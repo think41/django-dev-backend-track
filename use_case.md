@@ -1,4 +1,9 @@
-# Library Management System
+# Library Management System v2.0
+
+## Version History
+
+*   **v1.0:** Initial requirements for core functionality (book management, user roles, borrowing).
+*   **v2.0:** Introduction of new features like fine management, book reservations, and an enhanced book model.
 
 ## Requirements
 
@@ -65,3 +70,27 @@ To ensure a robust and maintainable system, we will adopt a Layered Architecture
 *   [ ] Write unit and integration tests for the API endpoints and business logic.
 *   [ ] Refine error handling and response messages.
 *   [ ] Set up Django Admin for easy data management.
+
+## Milestone 6: Book Model Enhancement (v2)
+
+*   [ ] Update the book model to include `ISBN`, `publication_date`, and `cover_image_url`.
+*   [ ] Update the book CRUD APIs to reflect the model changes.
+*   [ ] Update the data import script to handle the new fields.
+
+## Milestone 7: Fine Management (v2)
+
+*   [ ] Implement a system to track overdue books.
+*   [ ] Create a model to store fine information (e.g., amount, reason, status).
+*   [ ] Implement an API endpoint for admins to view and manage fines.
+*   [ ] Implement a mechanism to automatically calculate fines for overdue books upon return.
+
+## Milestone 8: Weekly Library Activity Report (v2)
+
+*   [ ] Create a new model, `Report`, to track the status of generated reports. The model's primary identifier (`id`) will be a timestamp of when the report generation was requested. It should also include fields for `status` (`pending`, `in_progress`, `completed`, `failed`) and `file_path` (to store the location of the generated report file).
+*   [ ] Implement a Celery task to generate a weekly library activity report in Markdown format.Use langchain and llm to query database directly. The report should include statistics like:
+    *   Number of new members this week.
+    *   Number of books borrowed this week.
+    *   Most borrowed books of the week.
+*   [ ] The Celery task should save the report to a pre-defined path on the server (e.g., `/var/reports/weekly_activity_<timestamp>.md` (it can be any path)). It should update the `Report` model's status to `in_progress` when it starts, and to `completed` or `failed` when it finishes. Upon completion, it should also save the report's location in the `file_path` field.
+*   [ ] Create an API endpoint for admins to trigger the weekly report generation. This endpoint will create a new `Report` record with a `pending` status and dispatch the Celery task.
+*   [ ] Create an API endpoint for admins to list generated reports and check their status.
