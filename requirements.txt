@@ -1,2 +1,22 @@
-Django
-psycopg2-binary
+# Core Django
+Django>=5.2.0
+psycopg2-binary>=2.9.0
+
+# Django REST Framework and JWT
+djangorestframework>=3.15.0
+djangorestframework-simplejwt>=5.3.0
+
+# CORS handling
+django-cors-headers>=4.4.0
+
+# Date parsing utilities
+python-dateutil>=2.8.0
+
+# Development and testing
+django-extensions>=3.2.0
+
+# Optional: For better development experience
+django-debug-toolbar>=4.2.0
+
+# Optional: For API documentation
+drf-yasg>=1.21.0
