@@ -17,3 +17,26 @@
 4.  **Start Development**
 
     With your prerequisites installed, use cases defined, and module specifications outlined, you are now ready to begin development.
+
+## Running with Docker
+
+This project is configured to run with Docker Compose, which simplifies the setup of the web server, database, and Celery services.
+
+To start the application, run:
+
+```bash
+docker-compose up --build
+```
+
+This will build the Docker images and start the following services:
+- `web`: The Django application.
+- `db`: The PostgreSQL database.
+- `redis`: The Redis server for Celery.
+- `celery`: The Celery worker for background tasks.
+
+## Celery and Redis
+
+This project uses Celery with Redis as a message broker to handle asynchronous tasks. This is particularly useful for long-running processes, such as generating reports, that should not block the main application thread.
+
+- **Celery:** A distributed task queue that allows you to run tasks in the background.
+- **Redis:** An in-memory data store that Celery uses as a broker to pass messages between the Django application and the Celery workers.
