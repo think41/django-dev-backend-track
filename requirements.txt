@@ -1,4 +1,6 @@
 Django
-psycopg2-binary
+djangorestframework
+djangorestframework-simplejwt
+psycopg[binary]
 celery
 redis

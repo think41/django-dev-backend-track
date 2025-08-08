@@ -44,8 +44,8 @@
 | `username`      | `CharField(150)`                        | Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. |
 | `password`      | `CharField(128)`                        | The hashed password for the user account.                    |
 | `email`         | `EmailField`                            | The user's email address. Must be unique.                    |
-| `role`          | `CharField(10)`                         | The user's role. Choices are `admin` or `member`.            |
-| `is_active`     | `BooleanField`                          | Designates whether this user should be treated as active. Unselect this instead of deleting accounts. Default: `False`. |
+| `role`          | `CharField(10)`                         | The user's role. Choices are `admin` or `member` (lowercase). |
+| `is_active`     | `BooleanField`                          | Activation flag used for admin approval. Default: `False`.   |
 | `date_joined`   | `DateTimeField`                         | Timestamp of when the user registered.                       |
 
 ---

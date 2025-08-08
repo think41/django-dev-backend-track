@@ -44,7 +44,7 @@
 | `title`         | `CharField(255)`      | The title of the book.                                       |
 | `author`        | `CharField(255)`      | The author of the book.                                      |
 | `genre`         | `CharField(100)`      | The genre of the book.                                       |
-| `quantity`      | `PositiveIntegerField`| The total number of copies of the book available to be borrowed. |
+| `quantity`      | `PositiveIntegerField`| The number of available copies to borrow. |
 | `created_at`    | `DateTimeField`       | Timestamp of when the record was created.                    |
 | `updated_at`    | `DateTimeField`       | Timestamp of the last update.                                |
 
@@ -57,8 +57,9 @@
 | `id`            | `PK`                                    | The primary key.                                             |
 | `user`          | `ForeignKey` to `User`                  | The user who is borrowing the book.                          |
 | `book`          | `ForeignKey` to `Book`                  | The book being borrowed.                                     |
-| `borrow_date`   | `DateField`                             | The date the borrow request was approved. Null until approval. |
-| `return_date`   | `DateField`                             | The date the book was returned. Null until returned.         |
+| `request_date`  | `DateTimeField`                         | The timestamp when the borrow request was created.           |
+| `borrow_date`   | `DateTimeField`                         | The timestamp when the request was approved. Null until approval. |
+| `return_date`   | `DateTimeField`                         | The timestamp when the book was returned. Null until returned. |
 | `status`        | `CharField(20)`                         | The current status of the borrow request. Choices: `PENDING`, `APPROVED`, `REJECTED`, `RETURNED`. Default: `PENDING`. |
 | `created_at`    | `DateTimeField`                         | Timestamp of when the borrow request was created.            |
 | `updated_at`    | `DateTimeField`                         | Timestamp of the last status update.                         |
