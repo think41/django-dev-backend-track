@@ -57,3 +57,6 @@ class TokenResponseSerializer(serializers.Serializer):
 
 class MessageResponseSerializer(serializers.Serializer):
     message = serializers.CharField(help_text="Response message")
+    
+    class Meta:
+        ref_name = "UsersMessageResponse"

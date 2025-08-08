@@ -34,5 +34,8 @@ class BorrowRecordSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'user', 'book', 'created_at', 'updated_at')
 
 
-class MessageResponseSerializer(serializers.Serializer):
+class BooksMessageResponseSerializer(serializers.Serializer):
     message = serializers.CharField(help_text="Response message")
+    
+    class Meta:
+        ref_name = "BooksMessageResponse"

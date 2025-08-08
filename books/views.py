@@ -7,7 +7,7 @@ from drf_yasg import openapi
 from .models import Book, BorrowRecord
 from .serializers import (
     BookSerializer, BookCreateSerializer, BorrowRequestSerializer, 
-    ReturnBookSerializer, BorrowRecordSerializer, MessageResponseSerializer
+    ReturnBookSerializer, BorrowRecordSerializer, BooksMessageResponseSerializer
 )
 from .services import BorrowingService
 
@@ -193,7 +193,7 @@ def delete_book(request, book_id):
     method='post',
     request_body=BorrowRequestSerializer,
     responses={
-        201: MessageResponseSerializer,
+        201: BooksMessageResponseSerializer,
         400: 'Bad Request - Book unavailable or duplicate request'
     },
     operation_description='Submit a request to borrow a book. Members only.',
@@ -238,7 +238,7 @@ def borrow_book(request):
     method='post',
     request_body=ReturnBookSerializer,
     responses={
-        200: MessageResponseSerializer,
+        200: BooksMessageResponseSerializer,
         400: 'Bad Request - Invalid record or not owned by user'
     },
     operation_description='Return a borrowed book. Members only.',
@@ -320,7 +320,7 @@ def list_borrow_records(request):
 @swagger_auto_schema(
     method='patch',
     responses={
-        200: MessageResponseSerializer,
+        200: BooksMessageResponseSerializer,
         400: 'Bad Request - Invalid request state or book unavailable',
         403: 'Forbidden - Admin access required',
         404: 'Not Found - Borrow record does not exist'
@@ -366,7 +366,7 @@ def approve_borrow_request(request, record_id):
 @swagger_auto_schema(
     method='patch',
     responses={
-        200: MessageResponseSerializer,
+        200: BooksMessageResponseSerializer,
         400: 'Bad Request - Invalid request state',
         403: 'Forbidden - Admin access required',
         404: 'Not Found - Borrow record does not exist'
