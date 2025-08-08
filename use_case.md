@@ -87,10 +87,10 @@ To ensure a robust and maintainable system, we will adopt a Layered Architecture
 ## Milestone 8: Weekly Library Activity Report (v2)
 
 *   [ ] Create a new model, `Report`, to track the status of generated reports. The model's primary identifier (`id`) will be a timestamp of when the report generation was requested. It should also include fields for `status` (`pending`, `in_progress`, `completed`, `failed`) and `file_path` (to store the location of the generated report file).
-*   [ ] Implement a Celery task to generate a weekly library activity report in Markdown format. The report should include statistics like:
+*   [ ] Implement a Celery task to generate a weekly library activity report in Markdown format.Use langchain and llm to query database directly. The report should include statistics like:
     *   Number of new members this week.
     *   Number of books borrowed this week.
     *   Most borrowed books of the week.
-*   [ ] The Celery task should save the report to a pre-defined path on the server (e.g., `/var/reports/weekly_activity_<timestamp>.md`). It should update the `Report` model's status to `in_progress` when it starts, and to `completed` or `failed` when it finishes. Upon completion, it should also save the report's location in the `file_path` field.
+*   [ ] The Celery task should save the report to a pre-defined path on the server (e.g., `/var/reports/weekly_activity_<timestamp>.md` (it can be any path)). It should update the `Report` model's status to `in_progress` when it starts, and to `completed` or `failed` when it finishes. Upon completion, it should also save the report's location in the `file_path` field.
 *   [ ] Create an API endpoint for admins to trigger the weekly report generation. This endpoint will create a new `Report` record with a `pending` status and dispatch the Celery task.
 *   [ ] Create an API endpoint for admins to list generated reports and check their status.
