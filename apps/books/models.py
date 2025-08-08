@@ -11,6 +11,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=32, blank=True)
     publisher = models.CharField(max_length=255, blank=True)
     publication_date = models.DateField(null=True, blank=True)
+    cover_image_url = models.URLField(blank=True)
     available_copies = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -38,3 +39,21 @@ class BorrowRecord(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user} - {self.book} ({self.status})"
+
+
+class Fine(models.Model):
+    class Status(models.TextChoices):
+        PENDING = "PENDING", "PENDING"
+        PAID = "PAID", "PAID"
+        WAIVED = "WAIVED", "WAIVED"
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    borrow_record = models.ForeignKey(BorrowRecord, on_delete=models.CASCADE, related_name="fines")
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    reason = models.CharField(max_length=64, default="OVERDUE")
+    status = models.CharField(max_length=16, choices=Status.choices, default=Status.PENDING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"Fine {self.id} - {self.amount} ({self.status})"

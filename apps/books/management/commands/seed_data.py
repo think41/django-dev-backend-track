@@ -89,14 +89,26 @@ class Command(BaseCommand):
                     title = row['title']
                     author = row['author']
                     genre = row.get('genre') or ''
+                    isbn = row.get('isbn', '').strip()
+                    publication_date = (row.get('publication_date') or '').strip()
+                    cover_image_url = (row.get('cover_image_url') or '').strip()
                     available_copies = int(row.get('available_copies') or 0)
                     if not Book.objects.filter(title=title, author=author).exists():
-                        Book.objects.create(
+                        create_kwargs = dict(
                             title=title,
                             author=author,
                             genre=genre,
+                            isbn=isbn,
+                            cover_image_url=cover_image_url,
                             available_copies=available_copies,
                         )
+                        # parse date if provided (YYYY-MM-DD)
+                        if publication_date:
+                            try:
+                                create_kwargs['publication_date'] = publication_date
+                            except Exception:
+                                pass
+                        Book.objects.create(**create_kwargs)
                         self.stdout.write(self.style.SUCCESS(f"Created book {title}"))
 
         # Borrow Records (optional, uses usernames and titles for mapping simplicity)

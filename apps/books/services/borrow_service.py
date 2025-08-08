@@ -2,6 +2,7 @@ from datetime import date
 from django.db import transaction
 
 from ..models import Book, BorrowRecord
+from .fine_service import FineService
 from ..data import BorrowRepository
 
 
@@ -48,4 +49,6 @@ class BorrowService:
         record.save(update_fields=["status", "return_date", "updated_at"])
         record.book.available_copies += 1
         record.book.save(update_fields=["available_copies", "updated_at"])
+        # Check for overdue and create fine if needed
+        FineService.calculate_and_create_fine_if_overdue(record)
         return record

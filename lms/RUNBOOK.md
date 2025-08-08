@@ -55,45 +55,55 @@ Use Authorization: Bearer <access_token> header after login. Admin-only steps ar
       {"identifier":"alice","password":"Passw0rd!"}
       ```
 
-5) List books
-    - Method/Path: GET `/api/books/books/`
+5) List/Search books
+    - Method/Path: GET `/api/books/`
+    - Query params: `q`, `title`, `author`, `genre`, `ordering`
 
 6) Create a book [ADMIN]
-    - Method/Path: POST `/api/books/books/`
+    - Method/Path: POST `/api/books/`
     - Body:
       ```json
-      {"title":"Django Unleashed","author":"A. Author","genre":"Tech","isbn":"9780000000001","total_copies":5,"available_copies":5}
+      {"title":"Django Unleashed","author":"A. Author","genre":"Tech","isbn":"9780000000001","publication_date":"2024-01-01","cover_image_url":"https://...","available_copies":5}
       ```
 
 7) Member requests to borrow a book
-    - Method/Path: POST `/api/books/borrow/borrow/`
+    - Method/Path: POST `/api/borrow/borrow/`
     - Body:
       ```json
       {"book_id":"<book_uuid>"}
       ```
 
 8) Admin views pending approvals [ADMIN]
-    - Method/Path: GET `/api/books/borrow/approvals/`
+    - Method/Path: GET `/api/borrow/approvals/`
 
 9) Admin approves a borrow request [ADMIN]
-    - Method/Path: PATCH `/api/books/borrow/{borrow_id}/approve/`
+    - Method/Path: PATCH `/api/borrow/{borrow_id}/approve/`
 
 10) Member views their borrow history
-     - Method/Path: GET `/api/books/borrow/history/`
+     - Method/Path: GET `/api/borrow/history/`
 
 11) Member initiates return
-     - Method/Path: POST `/api/books/borrow/return/`
+     - Method/Path: POST `/api/borrow/return/`
      - Body:
        ```json
        {"borrow_record_id":"<borrow_uuid>"}
        ```
 
 12) Admin approves the return [ADMIN]
-     - Method/Path: PATCH `/api/books/borrow/{borrow_id}/return/approve/`
+     - Method/Path: PATCH `/api/borrow/{borrow_id}/return/approve/`
 
 13) Admin can inspect a user’s borrow history [ADMIN]
      - GET `/api/users/members/{user_id}/borrow/`
      - GET `/api/users/members/{user_id}/borrow/{book_id}/`
+
+14) Admin views fines [ADMIN]
+     - Method/Path: GET `/api/fines/?status=`
+
+15) Member pays fine (or admin) 
+     - Method/Path: POST `/api/fines/{fine_id}/pay/`
+
+16) Admin waives fine [ADMIN]
+     - Method/Path: POST `/api/fines/{fine_id}/waive/`
 
 ## Credentials
 - Check `data/users.csv` for seeded admin/member credentials, or create an admin user via `createsuperuser`.

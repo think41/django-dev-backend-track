@@ -33,56 +33,56 @@ To ensure a robust and maintainable system, we will adopt a Layered Architecture
 
 ## Milestone 1: Project Setup & Database Schema
 
-*   [ ] Initialize a new Django project.
-*   [ ] Create a required Django apps/modules
-*   [ ] Create `spec.md` files for each app/module, detailing their responsibilities.
-*   [ ] Define required Django models.
-*   [ ] Generate and run database migrations to create the tables.
-*   [ ] Load the sample data from the CSV file into the database.
+*   [x] Initialize a new Django project.
+*   [x] Create the required Django apps/modules (`users`, `books`).
+*   [ ] Create `spec.md` files for each app/module, detailing their responsibilities. (pending)
+*   [x] Define required Django models.
+*   [x] Generate and run database migrations to create the tables.
+*   [x] Load the sample data from the CSV file into the database (via `seed_data` command).
 
 ## Milestone 2: Authentication & Authorization
 
-*   [ ] Set up Django REST Framework.
-*   [ ] Set up `djangorestframework-simplejwt` for JWT authentication.
-*   [ ] Implement user registration (sign-up) endpoint.
-*   [ ] Implement user login endpoint to generate JWT access and refresh tokens.
-*   [ ] Configure permissions for API endpoints (e.g., `IsAuthenticated`, `IsAdminUser`).
+*   [x] Set up Django REST Framework.
+*   [x] Set up `djangorestframework-simplejwt` for JWT authentication.
+*   [x] Implement user registration (sign-up) endpoint.
+*   [x] Implement user login endpoint to generate JWT access and refresh tokens.
+*   [x] Configure permissions for API endpoints (e.g., `IsAuthenticated`, `IsAdminUser`, custom `IsAdmin`).
 
 ## Milestone 3: Member Functionality
 
-*   [ ] Implement an API endpoint for members to search for books (e.g., by title, author, genre).
-*   [ ] Implement an API endpoint for members to **request to borrow** a book.
-*   [ ] Implement an API endpoint for members to return a book.
-*   [ ] Implement an API endpoint for members to view their borrowing history (including the status of their requests).
+*   [x] Implement an API endpoint for members to search for books (e.g., by title, author, genre). (via /api/books/?q=&title=&author=&genre=)
+*   [x] Implement an API endpoint for members to **request to borrow** a book.
+*   [x] Implement an API endpoint for members to return a book.
+*   [x] Implement an API endpoint for members to view their borrowing history (including the status of their requests).
 
 ## Milestone 4: Admin Functionality
 
-*   [ ] Implement API endpoints for admins to perform CRUD operations on books (Create, Read, Update, Delete).
-*   [ ] Implement an API endpoint for admins to view all users.
-*   [ ] Implement an API endpoint for admins to approve member registrations.
-*   [ ] Implement an API endpoint for admins to view all borrow records and filter by status (e.g., PENDING, APPROVED).
-*   [ ] Implement an API endpoint for admins to **approve a borrow request**.
-*   [ ] Implement an API endpoint for admins to **reject a borrow request**.
+*   [x] Implement API endpoints for admins to perform CRUD operations on books (Create, Read, Update, Delete).
+*   [x] Implement an API endpoint for admins to view all users. (Members list; plus added public users list)
+*   [x] Implement an API endpoint for admins to approve member registrations.
+*   [x] Implement an API endpoint for admins to view all borrow records and filter by status (e.g., PENDING, APPROVED). (GET /api/borrow/records/?status=)
+*   [x] Implement an API endpoint for admins to **approve a borrow request**.
+*   [x] Implement an API endpoint for admins to **reject a borrow request**. (/api/borrow/{id}/reject/)
 
 ## Milestone 5: Finalization
 
-*   [ ] Add API documentation using a tool like `drf-yasg` or `drf-spectacular`.
-*   [ ] Write unit and integration tests for the API endpoints and business logic.
-*   [ ] Refine error handling and response messages.
-*   [ ] Set up Django Admin for easy data management.
+*   [x] Add API documentation using a tool like `drf-yasg` or `drf-spectacular`. (using drf-spectacular; `/api/schema/`, `/api/docs/`)
+*   [x] Write unit and integration tests for the API endpoints and business logic. (basic API tests added)
+*   [x] Refine error handling and response messages. (validated required params and status filtering)
+*   [x] Set up Django Admin for easy data management.
 
 ## Milestone 6: Book Model Enhancement (v2)
 
-*   [ ] Update the book model to include `ISBN`, `publication_date`, and `cover_image_url`.
-*   [ ] Update the book CRUD APIs to reflect the model changes.
-*   [ ] Update the data import script to handle the new fields.
+*   [x] Update the book model to include `ISBN`, `publication_date`, and `cover_image_url`.
+*   [x] Update the book CRUD APIs to reflect the model changes.
+*   [x] Update the data import script to handle the new fields.
 
 ## Milestone 7: Fine Management (v2)
 
-*   [ ] Implement a system to track overdue books.
-*   [ ] Create a model to store fine information (e.g., amount, reason, status).
-*   [ ] Implement an API endpoint for admins to view and manage fines.
-*   [ ] Implement a mechanism to automatically calculate fines for overdue books upon return.
+*   [x] Implement a system to track overdue books.
+*   [x] Create a model to store fine information (e.g., amount, reason, status).
+*   [x] Implement an API endpoint for admins to view and manage fines.
+*   [x] Implement a mechanism to automatically calculate fines for overdue books upon return.
 
 ## Milestone 8: Weekly Library Activity Report (v2)
 

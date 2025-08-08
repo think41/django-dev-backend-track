@@ -6,7 +6,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 
 from ..services import UserService
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer, TokenResponseSerializer
-
+from apps.books.models import BorrowRecord
 User = get_user_model()
 
 
@@ -90,7 +90,6 @@ class MembersViewSet(viewsets.ReadOnlyModelViewSet):
     @extend_schema(operation_id="members_borrow_list")
     @action(detail=True, methods=["get"], url_path="borrow")
     def borrow_history(self, request, pk=None):
-        from apps.books.models import BorrowRecord
         records = BorrowRecord.objects.filter(user_id=pk).order_by("-created_at")
         data = [
             {
@@ -109,7 +108,6 @@ class MembersViewSet(viewsets.ReadOnlyModelViewSet):
     ])
     @action(detail=True, methods=["get"], url_path="borrow/(?P<book_id>[^/.]+)")
     def borrow_history_for_book(self, request, pk=None, book_id=None):
-        from apps.books.models import BorrowRecord
         records = BorrowRecord.objects.filter(user_id=pk, book_id=book_id).order_by("-created_at")
         data = [
             {

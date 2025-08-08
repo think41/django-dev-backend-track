@@ -24,6 +24,9 @@ Permissions and auth:
 - JWT via djangorestframework-simplejwt (configured in project settings)
 - `IsAdmin` checks `request.user.role == 'ADMIN'` for admin-only endpoints
 
+Notes:
+- Borrow history endpoints are exposed here for admin inspection of user activity, while fines and borrowing workflows live in the `books` app.
+
 URLs (mounted under `/api/users/`):
 - `auth/register/` (POST)
 - `auth/login/` (POST)
