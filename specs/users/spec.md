@@ -1,85 +1,99 @@
 # Module Specification: `users`
 
-**Version:** 1.0
-
+**Version:** 1.1
 **Author:** Mayur Gowda
-
-**Date:** 2025-08-01
+**Date:** 2025-08-10
 
 ---
 
 ## 1. Purpose and Responsibility
 
-The `users` module is the central hub for managing user data and user-related activities. It defines the core `User` model and is responsible for storing profile information, tracking borrowing history, and managing book requests.
+The `users` module manages user accounts, profiles, and their interactions with books in the library system. It defines the `User` model, as well as models for tracking book requests and borrowing history.
 
 ### Key Responsibilities:
-- User Data Management: Handles the CRUD (Create, Read, Update, Delete) operations for user profiles.
-- Profile Management: Allows users to view and update their own profile information.
-- Borrowing Records: Maintains records of books requested, borrowed, and returned by users.
+
+* **User Data Management:** Create, update, and store user information securely.
+* **Profile Management:** Enable users to view and edit personal details.
+* **Book Requests & Borrowing Records:** Track the status of book borrow requests and maintain historical borrowing records.
 
 ---
 
 ## 2. Dependencies
 
-- `authentication` module: For securing user-specific endpoints.
-- `books` module: To link users with the books they borrow.
+* **`authentication` module:** Handles secure authentication for user actions.
+* **`books` module:** Links `User` records to specific books via borrow requests and history.
 
 ---
 
 ## 3. Data Models / Schema
 
-### User Model
-- `id`: uuid
-- `username`: str
-- `email`: str
-- `password`: str (hashed)
-- `role`: str (e.g., `"member"`, `"admin"`)
-- `created_at`: datetime
-- `updated_at`: datetime
+### **User Model**
 
-### BookRequest Model
-- `id`: uuid
-- `user_id`: uuid (foreign key to User)
-- `book_id`: uuid (foreign key to Book)
-- `status`: str (e.g., `"PENDING"`, `"APPROVED"`, `"REJECTED"`)
-- `created_at`: datetime
-- `updated_at`: datetime
+* `id`: `uuid` — Primary key.
+* `username`: `str` — Unique username for login and identification.
+* `email`: `str` — Unique email address (used for authentication).
+* `first_name`: `str` — Optional first name.
+* `last_name`: `str` — Optional last name.
+* `password`: `str` — Hashed password.
+* `role`: `str` — `"Member"` or `"Admin"`.
+* `is_approved`: `bool` — Whether the account is approved for borrowing.
+* `is_active`: `bool` — Whether the account is active.
+* `created_at`: `datetime` — When the user was created.
+* `updated_at`: `datetime` — When the user was last updated.
 
-### BorrowHistory Model
-- `id`: uuid
-- `user_id`: uuid (foreign key to User)
-- `book_id`: uuid (foreign key to Book)
-- `borrow_date`: datetime
-- `return_date`: datetime (nullable)
-- `created_at`: datetime
-- `updated_at`: datetime
+---
+
+### **BookRequest Model**
+
+* `id`: `uuid` — Primary key.
+* `user_id`: `uuid` — Foreign key to `User`.
+* `book_id`: `uuid` — Foreign key to `Book`.
+* `request_date`: `datetime` — When the request was made.
+* `borrow_date`: `datetime` — When the book was borrowed (nullable).
+* `return_date`: `datetime` — When the book was returned (nullable).
+* `status`: `str` — `"PENDING"`, `"APPROVED"`, or `"REJECTED"`.
+* `created_at`: `datetime` — When the request record was created.
+* `updated_at`: `datetime` — When the request record was last updated.
+
+---
+
+### **BorrowHistory Model**
+
+* `id`: `uuid` — Primary key.
+* `user_id`: `uuid` — Foreign key to `User`.
+* `book_id`: `uuid` — Foreign key to `Book`.
+* `borrow_date`: `datetime` — Date when the book was borrowed.
+* `return_date`: `datetime` — Date when the book was returned (nullable).
 
 ---
 
 ## 4. API Endpoints
 
-- `GET /api/users/me`
-  - **Description:** Retrieves the profile of the currently authenticated user.
-  - **Response:** `{ "id": "...", "username": "...", "email": "..." }`
+* **`GET /api/users/me`**
+  Retrieves the profile of the authenticated user.
+  **Response:** `{ "id": "...", "username": "...", "email": "...", "first_name": "...", "last_name": "...", "role": "...", "is_approved": true }`
 
-- `PUT /api/users/me`
-  - **Description:** Updates the profile of the currently authenticated user.
-  - **Request Body:** `{ "username": "...", "email": "..." }`
-  - **Response:** `{ "id": "...", "username": "...", "email": "..." }`
+* **`PUT /api/users/me`**
+  Updates the authenticated user’s profile.
+  **Request Body:** `{ "username": "...", "email": "...", "first_name": "...", "last_name": "..." }`
+  **Response:** Updated profile details.
 
-- `GET /api/users/me/history`
-  - **Description:** Retrieves the borrowing history for the currently authenticated user.
-  - **Response:** `[ { "book_title": "...", "borrow_date": "...", "return_date": "..." } ]`
+* **`GET /api/users/me/history`**
+  Retrieves borrowing history for the authenticated user.
+  **Response:** `[ { "book_title": "...", "borrow_date": "...", "return_date": "..." } ]`
 
-- `GET /api/users/me/requests`
-  - **Description:** Retrieves all book borrow requests made by the currently authenticated user.
-  - **Response:** `[ { "book_title": "...", "status": "...", "requested_at": "..." } ]`
+* **`GET /api/users/me/requests`**
+  Retrieves borrow requests for the authenticated user.
+  **Response:** `[ { "book_title": "...", "status": "...", "request_date": "...", "borrow_date": "...", "return_date": "..." } ]`
 
 ---
 
 ## 5. Services and Business Logic
 
-- **UserService:** Manages the core CRUD operations for the `User` model. It ensures data integrity and handles user creation in coordination with the `authentication` module.
-- **UserProfileService:** Handles business logic related to user profiles, such as updating user information and retrieving profile data for display.
-- **BorrowingRecordService:** Manages the creation and retrieval of `BookRequest` and `BorrowHistory` records. It provides a clear history of a user's interactions with the library's books.
+* **UserService:** Handles CRUD operations for `User` objects, ensuring data validation and secure password handling.
+* **UserProfileService:** Manages user profile retrieval and updates.
+* **BorrowingRecordService:** Coordinates creation and retrieval of `BookRequest` and `BorrowHistory` records, providing detailed tracking of book borrow cycles.
 
+---
+
+If you want, I can also **write a migration-safe script** to load your CSVs directly into these updated models without errors. That way, the `user_id` / `book_id` values from CSV will correctly link to your database rows.
