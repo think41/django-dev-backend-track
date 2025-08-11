@@ -11,6 +11,8 @@ services:
     depends_on:
       - db
       - redis
+    environment:
+      - DATABASE_URL=postgres://lms_user:lms_password@db:5432/lms
   db:
     image: postgres:latest
     container_name: lms-postgres
@@ -20,11 +22,13 @@ services:
       POSTGRES_PASSWORD: lms_password
     ports:
       - "5433:5432"
-    #command: -p 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
   redis:
-    image: "redis:alpine"
+    image: redis:alpine
+    container_name: lms-redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
   celery:
     build: .
     command: celery -A lms worker -l info
