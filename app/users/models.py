@@ -15,6 +15,14 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, username, password=None, **extra_fields):
         extra_fields.setdefault('role', 'Admin')
         extra_fields.setdefault('is_approved', True)
+        extra_fields.setdefault('is_staff', True)       # Add this line
+        extra_fields.setdefault('is_superuser', True)   # Add this line
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
         return self.create_user(email, username, password, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -28,6 +36,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    is_staff = models.BooleanField(default=False)  # this is required for admin login
+    is_superuser = models.BooleanField(default=False)  # required by PermissionsMixin but good to have explicitly
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

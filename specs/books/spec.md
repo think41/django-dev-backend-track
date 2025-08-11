@@ -53,11 +53,11 @@ The `books` module is responsible for managing the library's collection of books
   - **Response:** `{ "id": "...", "title": "...", "summary": "...", ... }`
 
 ### User-Specific Endpoints (Requires Authentication)
-- `POST /api/books/<book_id>/borrow`
+- `POST /api/books/request/<book_id>`
   - **Description:** Allows a logged-in user to request to borrow a book.
-  - **Response:** `{ "message": "Borrow request submitted successfully. Waiting for approval." }`
+  - **Response:** `{ "message": "Request submitted successfully. Waiting for approval." }`
 
-- `POST /api/books/<book_id>/return`
+- `POST /api/books/return/<book_id>`
   - **Description:** Allows a logged-in user to return a borrowed book.
   - **Response:** `{ "message": "Book returned successfully." }`
 
