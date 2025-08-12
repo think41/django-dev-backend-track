@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('PENDING', 'Pending'), ('APPROVED', 'Approved'), ('REJECTED', 'Rejected'), ('RETURNED', 'Returned')], default='PENDING', max_length=20, verbose_name='status')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='created at')),
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='updated at')),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='borrow_records', to='book_management.book', verbose_name='book')),
+                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='borrow_records', to='books.book', verbose_name='book')),
             ],
             options={
                 'verbose_name': 'borrow record',

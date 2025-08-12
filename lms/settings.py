@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     
     # Custom apps
-    'user_management',
-    'book_management',
+    'users',
+    'books',
 ]
 
 MIDDLEWARE = [
@@ -144,7 +144,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
 # Custom User Model
-AUTH_USER_MODEL = 'user_management.User'
+AUTH_USER_MODEL = 'users.User'
 
 # REST Framework settings
 REST_FRAMEWORK = {
