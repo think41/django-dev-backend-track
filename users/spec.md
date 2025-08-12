@@ -1,10 +1,14 @@
 # Module Specification: `Users`
 
-**Version:** 1.0
+**Version:** 2.0
 
-**Author:** Gemini
+**Author:** Karan Singh
 
-**Date:** 2025-08-01
+**Date:** 2025-08-12
+
+**Version History:**
+- **v1.0 (2025-08-01):** Initial specification with core user management and authentication functionality.
+- **v2.0 (2025-08-12):** Updated JWT payload requirements to include specific claims.
 
 ---
 
@@ -28,7 +32,7 @@
 ## 2. Dependencies
 
 -   **`django.contrib.auth`**: Used for the underlying user model and password management.
--   **`djangorestframework-simplejwt`**: Required for generating and validating JWT tokens for authentication.
+-   **`djangorestframework-simplejwt`**: Required for generating and validating JWT tokens for authentication. Configured to include specific claims in the JWT payload.
 
 ---
 

@@ -36,8 +36,10 @@ class UserRegistrationView(generics.CreateAPIView):
 class UserLoginView(TokenObtainPairView):
     """
     API endpoint for user login.
-    Uses JWT token authentication.
+    Uses JWT token authentication with custom claims (user_id, role, exp).
     """
+    from .jwt_serializers import CustomTokenObtainPairSerializer
+    serializer_class = CustomTokenObtainPairSerializer
     permission_classes = (AllowAny,)
 
 
